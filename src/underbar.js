@@ -107,7 +107,7 @@
       if ( _.indexOf(holder, iterator(c)) === -1 ) { 
        holder.push(iterator(c));
        results.push(c);
-       console.log(results);
+
       }
     });  
   } else {  
@@ -127,6 +127,12 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+  var results = [];
+  _.each(collection, function(c, i, collection){
+      results.push(iterator(c));
+    });
+  return results;
+    
   };
 
   /*
