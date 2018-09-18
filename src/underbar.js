@@ -130,9 +130,8 @@
   var results = [];
   _.each(collection, function(c, i, collection){
       results.push(iterator(c));
-    });
+  });
   return results;
-    
   };
 
   /*
@@ -174,6 +173,16 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+  var acc = accumulator;
+  var newColl = collection;
+  if (acc === undefined) {
+    acc = newColl[0];
+    newColl = newColl.slice(1);
+  }
+  _.each(newColl, function(c, i) {
+    acc = iterator(acc, c);
+  });  
+  return acc;
   };
 
   // Determine if the array or object contains a given value (using `===`).
