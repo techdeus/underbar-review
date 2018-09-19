@@ -250,6 +250,14 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    for ( var i = 1; i < arguments.length; i++ ) {
+      for ( var key in arguments[i] ) {
+        if (obj[key] === undefined) {
+          obj[key] = arguments[i][key]; 
+        }
+      }
+    }
+  return obj;
   };
 
 
@@ -293,6 +301,20 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+  var cache = {};
+  
+  
+    return function() {
+    
+      var n = JSON.stringify(arguments);
+      if ( n in cache ) {
+        return cache[n];
+      } else {
+        var result = func.apply(this, arguments);
+        cache[n] = result;
+        return result;
+      }
+    }
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -302,6 +324,8 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+   var args = Array.from(arguments).slice(2);
+   return setTimeout(function() {func.apply(this, args)}, wait);
   };
 
 
@@ -316,6 +340,7 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+   
   };
 
 
